@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/English_form', function () {
+    return view('English_form');
+});
+Route::get('/Arabic_form', function () {
+    return view('Arabic_form');
+});
