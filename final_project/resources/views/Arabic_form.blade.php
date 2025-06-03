@@ -9,7 +9,7 @@
 
         body{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        } 
+        }
         main {
             background-color: #F1FEFC;
             padding: 30px;
@@ -36,7 +36,7 @@
             align-items: center;
         }
 
-        h2 { 
+        h2 {
             text-align: center;
             color: #444;
         }
@@ -127,7 +127,7 @@
 .input-button-group {
      display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
     margin-bottom: 10px;
     flex-direction: row-reverse;
   }
@@ -135,7 +135,7 @@
   padding: 13px 12px;
   display: flex;
   justify-content: center;  /* center horizontally */
-  align-items: center;   
+  align-items: center;
   margin-bottom: 20px;   /* center vertically */
    width:30%;
   white-space: nowrap; /* prevent text from wrapping */
@@ -215,7 +215,7 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
-    let isUsernameAvailable = true; 
+    let isUsernameAvailable = true;
 
     const fields = {
         full_name: {
@@ -410,7 +410,7 @@ form.addEventListener("submit", function (e) {
 });
 
 </script>
-<script src="includes/API_OPS.js" defer></script>
+<script src="{{ asset('js/whatsapp-checker.js') }}"></script>
 
 
 @include('includes.Arabic_footer')
