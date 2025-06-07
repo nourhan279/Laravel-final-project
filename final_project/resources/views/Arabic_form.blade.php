@@ -224,8 +224,6 @@
 </form>
 
 
-
-
 <script>
 const lang = '{{ str_contains(request()->path(), "Arabic") ? "ar" : "en" }}';
 </script>
