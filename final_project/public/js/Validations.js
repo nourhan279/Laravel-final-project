@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
         switch (inputId) {
             case 'full_name':
                 if (!value) { showError(inputId, langMessages.full_name_required); valid = false; }
-                else if (/\d/.test(value)) { showError(inputId, langMessages.full_name_no_numbers); valid = false; }
+                else if (/[\d\u0660-\u0669]/.test(value)) { showError(inputId, langMessages.full_name_no_numbers); valid = false; }
                 else { removeError(inputId); }
                 break;
             case 'user_name':
@@ -109,12 +109,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'phone':
                 if (!value) { showError(inputId, langMessages.phone_required); valid = false; }
-                else if (!/^\+?\d+$/.test(value)) { showError(inputId, langMessages.phone_format); valid = false; }
+                else if (!/^\+?[\d\u0660-\u0669]+$/.test(value)) { showError(inputId, langMessages.phone_format); valid = false; }
                 else { removeError(inputId); }
                 break;
             case 'whatsapp':
                 if (!value) { showError(inputId, langMessages.whatsapp_required); valid = false; }
-                else if (!/^\+?\d+$/.test(value)) { showError(inputId, langMessages.whatsapp_format); valid = false; }
+                else if (!/^\+?[\d\u0660-\u0669]+$/.test(value)) { showError(inputId, langMessages.whatsapp_format); valid = false; }
                 else { removeError(inputId); }
                 break;
             case 'country':
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
             case 'password':
                 if (!value) { showError(inputId, langMessages.password_required); valid = false; }
-                else if (!/^(?=.*\d)(?=.*[!@#$%^&*?]).{8,}$/.test(value)) { showError(inputId, langMessages.password_complex); valid = false; }
+                else if (!/^(?=.*[\d\u0660-\u0669])(?=.*[!@#$%^&*?]).{8,}$/.test(value)) { showError(inputId, langMessages.password_complex); valid = false; }
                 else { removeError(inputId); }
                 // Also re-validate confirm_password if password changes
                 validateField('confirm_password');
@@ -195,76 +195,3 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-
-// document.addEventListener('DOMContentLoaded', function () {
-//     const form = document.getElementById('myForm'); // more specific
-//     if (!form) return;
-
-//     console.log("Validation JS loaded with language:", lang);
-
-//     form.addEventListener('submit', function (e) {
-//         let valid = true;
-
-//         const messages = {
-//             en: {
-//                 full_name: "Full name is required and must not contain numbers.",
-//                 user_name: "Username is required.",
-//                 email: "Invalid or duplicate email address.",
-//                 phone: "Phone number is required and must be digits only.",
-//                 whatsapp: "WhatsApp number is required and must be digits only.",
-//                 password: "Password must be at least 8 characters with a number and special character.",
-//                 confirm_password: "Passwords do not match.",
-//             },
-//             ar: {
-//                 full_name: "الاسم الكامل مطلوب ويجب ألا يحتوي على أرقام.",
-//                 user_name: "اسم المستخدم مطلوب.",
-//                 email: "البريد الإلكتروني غير صالح أو مكرر.",
-//                 phone: "رقم الهاتف مطلوب ويجب أن يحتوي على أرقام فقط.",
-//                 whatsapp: "رقم الواتساب مطلوب ويجب أن يحتوي على أرقام فقط.",
-//                 password: "كلمة المرور يجب أن تكون 8 أحرف على الأقل مع رقم ورمز خاص.",
-//                 confirm_password: "كلمة المرور غير متطابقة.",
-//             }
-//         };
-
-//         const langMessages = lang === 'ar' ? messages.ar : messages.en;
-
-//         // Remove previous error messages
-//         document.querySelectorAll('.error-message').forEach(el => el.remove());
-
-//         const showError = (id, message) => {
-//             const input = document.getElementById(id);
-//             if (!input) return;
-//             const errorDiv = document.createElement('div');
-//             errorDiv.className = 'error-message';
-//             errorDiv.style.color = 'red';
-//             errorDiv.innerText = message;
-//             input.insertAdjacentElement('afterend', errorDiv);
-//             valid = false;
-//         };
-
-//         const fullName = document.getElementById('full_name').value.trim();
-//         if (!fullName || /\d/.test(fullName)) showError('full_name', langMessages.full_name);
-
-//         const userName = document.getElementById('user_name').value.trim();
-//         if (!userName) showError('user_name', langMessages.user_name);
-
-//         const email = document.getElementById('email').value.trim();
-//         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) showError('email', langMessages.email);
-
-//         const phone = document.getElementById('phone').value.trim();
-//         if (!/^\+?\d+$/.test(phone)) showError('phone', langMessages.phone);
-
-//         const whatsapp = document.getElementById('whatsapp').value.trim();
-//         if (!/^\+?\d+$/.test(whatsapp)) showError('whatsapp', langMessages.whatsapp);
-
-//         const password = document.getElementById('password').value;
-//         if (!/^(?=.*\d)(?=.*[!@#$%^&*?]).{8,}$/.test(password)) showError('password', langMessages.password);
-
-//         const confirmPassword = document.getElementById('confirm_password').value;
-//         if (password !== confirmPassword) showError('confirm_password', langMessages.confirm_password);
-
-//         if (!valid) {
-//             e.preventDefault(); // Prevent form submission if any field is invalid
-//         }
-//     });
-// });
