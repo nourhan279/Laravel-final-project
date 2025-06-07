@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <title>Registration Form</title>
@@ -141,7 +141,15 @@
   white-space: nowrap; /* prevent text from wrapping */
 }
 
+  .error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 2px;
+     }
 
+.is-invalid { border-color: red !important; }
+ .text-danger { color: red; font-size: 0.85em; margin-top: 2px; margin-bottom: 5px; }
+ input:not(.is-invalid) { border-color: #ccc; } 
 
 
     </style>
@@ -153,55 +161,57 @@
 <div class="form-container">
 <div id="alertBox" style="display: none;" class="alert"></div>
 <h2 dir="rtl" style="text-align: center;" >موقع التسجيل</h2>
-<form method="POST" enctype="multipart/form-data" action="DB_Ops.php" onsubmit="return validateForm()" >
-<input type="hidden" name="register" value="1">
-    <label dir="rtl" for="full_name"> الأسم الكامل :</label>
-    <input dir="rtl" type="text" id="full_name" name="full_name" placeholder="الأسم الكامل" required>
-    <div id="full_name_error" class="error"></div>
+<form id="myForm" method="POST" enctype="multipart/form-data" action="DB_Ops.php" onsubmit="return validateForm()" >
+ <input type="hidden" name="lang" value="ar"> <label dir="rtl" for="full_name">الاسم الكامل:</label>
+            <input dir="rtl" type="text" id="full_name" name="full_name" placeholder="الاسم الكامل" value="{{ old('full_name') }}" class="@error('full_name') is-invalid @enderror">
+            <div class="text-danger" id="full_name_error">@error('full_name'){{ $message }}@enderror</div>
 
-    <label dir="rtl" for="user_name" > اسم المستخدم :</label>
-    <input dir="rtl" type="text" id="user_name" placeholder="اسم المستخدم" name="اسم المستخدم" required>
-    <div id="user_name_error" class="error"></div>
+    <label dir="rtl" for="user_name">اسم المستخدم:</label>
+            <input dir="rtl" type="text" id="user_name" placeholder="اسم المستخدم" name="user_name" value="{{ old('user_name') }}" class="@error('user_name') is-invalid @enderror">
+            <div class="text-danger" id="user_name_error">@error('user_name'){{ $message }}@enderror</div>
+
+    <label dir="rtl" for="email">البريد الإلكتروني:</label>
+            <input dir="rtl" type="email" id="email" placeholder="Example@domain.com" name="email" value="{{ old('email') }}" class="@error('email') is-invalid @enderror">
+            <div class="text-danger" id="email_error">@error('email'){{ $message }}@enderror</div>
+
+            <label dir="rtl" for="phone">الهاتف:</label>
+            <input dir="rtl" type="text" id="phone" placeholder="رقم الهاتف" name="phone" value="{{ old('phone') }}" class="@error('phone') is-invalid @enderror">
+            <div class="text-danger" id="phone_error">@error('phone'){{ $message }}@enderror</div>
 
 
-    <label dir="rtl" for="email"> البريد الإلكتروني :</label>
-    <input dir="rtl" type="email" id="email"  placeholder="Example@domain.com" name="email" required>
-    <div id="email_error" class="error"></div>
 
-    <label dir="rtl" for="phone">الهاتف:</label>
-    <input dir="rtl" type="text" id="phone" placeholder = "رقم الهاتف" name="phone" required>
-    <div id="phone_error" class="error"></div>
+    <label dir="rtl" for="whatsapp">رقم تطبيق الواتس:</label>
+            <div class="input-button-group">
+                <input dir="rtl" type="text" id="whatsapp" placeholder="رقم تطبيق الواتس" name="whatsapp" value="{{ old('whatsapp') }}" class="@error('whatsapp') is-invalid @enderror">
+                <button type="button" onclick="checkWhatsAppNumber()" id="wpbutton">التحقق من الصحة</button>
+            </div>
+            <div class="text-danger" id="whatsapp_error">@error('whatsapp'){{ $message }}@enderror</div>
 
-    <label dir="rtl" for="whatsapp">رقم تطبيق الواتس :</label>
-    <div class="input-button-group">
-    <input dir="rtl" type="text" id="whatsapp" placeholder ="رقم تطبيق الواتس"name="whatsapp" required>
-    <button  onclick="checkWhatsAppNumber()" id="wpbutton">التحقق من الصحة</button>
-</div>
-
-    <div id="whatsapp_error" class="error"></div>
 
     <label dir="rtl" for="country">العنوان:</label>
-<div style="display: flex; gap: 10px;">
-    <input dir="rtl" type="text" id="country" name="country" placeholder="الدولة" required style="flex: 1;">
-    <input dir="rtl" type="text" id="city" name="city" placeholder="المدينة" required style="flex: 1;">
-</div>
-<div id="country_error" class="error"></div>
-<div id="city_error" class="error"></div>
+            <div style="display: flex; gap: 10px; flex-direction: row-reverse;">
+                <input dir="rtl" type="text" id="city" name="city" placeholder="المدينة" style="flex: 1;" value="{{ old('city') }}" class="@error('city') is-invalid @enderror">
+                <input dir="rtl" type="text" id="country" name="country" placeholder="الدولة" style="flex: 1;" value="{{ old('country') }}" class="@error('country') is-invalid @enderror">
+            </div>
+            <div class="text-danger" id="country_error">@error('country'){{ $message }}@enderror</div>
+            <div class="text-danger" id="city_error">@error('city'){{ $message }}@enderror</div>
 
-    <!-- <label for="address">Address:</label>
-    <textarea id="address" name="address" required></textarea> -->
+            <label dir="rtl" for="password">كلمة المرور:</label>
+            <input dir="rtl" type="password" id="password" placeholder="8 أحرف أو أكثر (حرف خاص واحد على الأقل ورقم واحد)" name="password" class="@error('password') is-invalid @enderror">
+            <div class="text-danger" id="password_error">@error('password'){{ $message }}@enderror</div>
 
-    <label dir="rtl" for="password">كلمة المرور :</label>
-<input dir="rtl" type="password" id="password" placeholder="٨ أحرف أو أكثر (حرف خاص واحد على الأقل ورقم واحد)" name="password" required>
-<div id="password_error" class="error" ></div>
+            <label dir="rtl" for="confirm_password">تأكيد كلمة المرور:</label>
+            <input dir="rtl" type="password" id="confirm_password" placeholder="تأكيد كلمة المرور" name="password_confirmation" class="@error('password_confirmation') is-invalid @enderror">
+            <div class="text-danger" id="confirm_password_error">
+                @error('password_confirmation'){{ $message }}@enderror
+                @error('password') @if ($message === '*كلمة المرور غير متطابقة'){{ $message }}@endif @enderror
+            </div>
+    <div dir="rtl">
+                <label for="user_image">صورة المستخدم:</label>
+                <input lang="ar" type="file" id="file" name="file" accept="image/*" class="@error('file') is-invalid @enderror">
+            </div>
+            <div class="text-danger" id="file_error">@error('file'){{ $message }}@enderror</div>
 
-    <label dir="rtl" for="confirm_password">تأكيد كلمة المرور :</label>
-    <input dir="rtl" type="password" id="confirm_password" placeholder="تأكيد كلمة المرور" name="confirm_password" required>
-    <div id="confirm_password_error" class="error"></div>
-    <div  dir="rtl">
-    <label for="user_image">صورة المستخدم :</label>
-    <input lang="ar" type="file" id="file" name="file" accept="image/*" required>
-    </div>
     <p dir="rtl" style="color: gray; font-size: 0.85em; margin-bottom: 2px; margin-top: 4px;">كل البيانات مطلوبة *</p>
     <button type="submit" name="register" style="margin-bottom: 10px;" >تسجيل</button>
 
@@ -212,205 +222,210 @@
         </div>
     </div>
 </form>
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     const form = document.querySelector("form");
+//     let isUsernameAvailable = true;
+
+//    const fields = {
+//         full_name: {
+//             el: document.getElementById("full_name"),
+//             error: document.getElementById("full_name_error"),
+//             validate: value => {
+//                 if (value.trim() === "") return "*This field is required";
+//                 if (/[^a-zA-Z\s]/.test(value)) return "*Full name must contain only letters and spaces";
+//                 return "";
+//             }
+//         },
+//         user_name: {
+//             el: document.getElementById("user_name"),
+//             error: document.getElementById("user_name_error"),
+//             validate: value => {
+//                 if (value.trim() === "") return "*This field is required";
+//                 return "";
+//             }
+//         },
+//         country: {
+//             el: document.getElementById("country"),
+//             error: document.getElementById("country_error"),
+//             validate: value => {
+//                 if (value.trim() === "") return "*This field is required";
+//                 return "";
+//             }
+//         },
+//         city: {
+//             el: document.getElementById("city"),
+//             error: document.getElementById("city_error"),
+//             validate: value => {
+//                 if (value.trim() === "") return "*This field is required";
+//                 return "";
+//             }
+//         },
+//         email: {
+//             el: document.getElementById("email"),
+//             error: document.getElementById("email_error"),
+//             validate: value => {
+//                 const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
+//                 if (value.trim() === "") return "*This field is required";
+//                 if (!emailPattern.test(value)) return "*Email must be in format: example@domain.com";
+//                 return "";
+//             }
+//         },
+//         phone: {
+//             el: document.getElementById("phone"),
+//             error: document.getElementById("phone_error"),
+//             validate: value => {
+//                 const phonePattern = /^\+?\d+$/;
+//                 if (value.trim() === "") return "*This field is required";
+//                 if (!phonePattern.test(value)) return "*Phone must be digits and may start with +";
+//                 return "";
+//             }
+//         },
+//         whatsapp: {
+//     el: document.getElementById("whatsapp"),
+//     error: document.getElementById("whatsapp_error"),
+//     validate: value => {
+//         const phonePattern = /^\+\d{6,15}$/;
+//         if (value.trim() === "") return "*This field is required";
+//         if (!phonePattern.test(value)) return "*WhatsApp must start with + followed by 6 to 15 digits according to your country";
+//         return "";
+//     }
+// },
+//         password: {
+//             el: document.getElementById("password"),
+//             error: document.getElementById("password_error"),
+//             validate: value => {
+//                 if (value.trim() === "") return "*This field is required";
+//                 if (!/^(?=.*\d)(?=.*[!@#$%^&*?]).{8,}$/.test(value)) {
+//                     return "*At least 8 characters, 1 number, 1 special character";
+//                 }
+//                 return "";
+//             }
+//         },
+//         confirm_password: {
+//             el: document.getElementById("confirm_password"),
+//             error: document.getElementById("confirm_password_error"),
+//             validate: (value) => {
+//                 const passwordVal = document.getElementById("password").value;
+//                 if (value.trim() === "") return "*This field is required";
+//                 if (value !== passwordVal) return "*Password doesn't match";
+//                 return "";
+//             }
+//         }
+//     };
+
+//     Object.values(fields).forEach(({ el, error, validate }) => {
+//         el.addEventListener("blur", () => {
+//             const err = validate(el.value);
+//             error.textContent = err;
+//             error.style.color = "red";
+//             el.style.borderColor = err ? "red" : "#ccc";
+//         });
+
+//         el.addEventListener("input", () => {
+//             const err = validate(el.value);
+//             error.textContent = err;
+//             el.style.borderColor = err ? "red" : "#ccc";
+//         });
+//     });
+
+//      // Username availability check (on blur)
+//     document.getElementById("user_name").addEventListener("blur", function () {
+//         const username = this.value.trim();
+//         if (username !== "") {
+//             const xhr = new XMLHttpRequest();
+//             xhr.open("POST", "DB_Ops.php", true);
+//             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+//             xhr.onreadystatechange = function () {
+//                 if (xhr.readyState === 4 && xhr.status === 200) {
+//                     if (xhr.responseText === "exists") {
+//                         isUsernameAvailable = false;
+//                         fields.user_name.error.textContent = "*Username already taken";
+//                         fields.user_name.error.style.color = "red";
+//                         fields.user_name.el.style.borderColor = "red";
+//                     } else {
+//                         isUsernameAvailable = true;
+//                         fields.user_name.error.textContent = "";
+//                         fields.user_name.el.style.borderColor = "#ccc";
+//                     }
+//                 }
+//             };
+//             xhr.send("user_name=" + encodeURIComponent(username));
+//         }
+//     });
+
+//     // Final form submission with AJAX
+// form.addEventListener("submit", function (e) {
+//     e.preventDefault(); // Prevent default form submission
+
+//     let isValid = true;
+
+//     // Validate all input fields
+//     Object.values(fields).forEach(({ el, error, validate }) => {
+//         const err = validate(el.value);
+//         if (err) {
+//             error.textContent = err;
+//             error.style.color = "red";
+//             el.style.borderColor = "red";
+//             isValid = false;
+//         } else {
+//             error.textContent = "";
+//             el.style.borderColor = "#ccc";
+//         }
+//     });
+
+//     // Validate the image upload field
+//     const fileInput = document.querySelector('input[type="file"]');
+//     if (!fileInput || !fileInput.files.length) {
+//         alert("Please upload an image.");
+//         isValid = false;
+//     }
+
+//     // Check if username has already been marked unavailable
+//     if (!isUsernameAvailable) {
+//         fields.user_name.error.textContent = "*Username already taken";
+//         fields.user_name.el.style.borderColor = "red";
+//         isValid = false;
+//     }
+
+//     // If all validations pass, proceed with AJAX form submission
+//     if (isValid) {
+//         const formData = new FormData(form);
+//         formData.append("register", "1"); // Append the register flag
+
+//         const submitXhr = new XMLHttpRequest();
+//         submitXhr.open("POST", "DB_Ops.php", true);
+//         submitXhr.onreadystatechange = function () {
+//             if (submitXhr.readyState === 4 && submitXhr.status === 200) {
+//                 alert(submitXhr.responseText); // Show success or error message
+
+//                 form.reset(); // Reset form fields
+
+//                 // Reset UI styles
+//                 Object.values(fields).forEach(({ el, error }) => {
+//                     el.style.borderColor = "#ccc";
+//                     error.textContent = "";
+//                 });
+
+//                 // Optional: reset file input styling or message if needed
+//                 if (fileInput) {
+//                     fileInput.style.borderColor = "#ccc";
+//                 }
+//             }
+//         };
+
+//         submitXhr.send(formData);
+//     }
+// });
+// });
+
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form");
-    let isUsernameAvailable = true;
-
-    const fields = {
-        full_name: {
-            el: document.getElementById("full_name"),
-            error: document.getElementById("full_name_error"),
-            validate: value => {
-                if (value.trim() === "") return "*This field is required";
-                if (/[^a-zA-Z\s]/.test(value)) return "*Full name must contain only letters and spaces";
-                return "";
-            }
-        },
-        user_name: {
-            el: document.getElementById("user_name"),
-            error: document.getElementById("user_name_error"),
-            validate: value => {
-                if (value.trim() === "") return "*This field is required";
-                return "";
-            }
-        },
-        country: {
-            el: document.getElementById("country"),
-            error: document.getElementById("country_error"),
-            validate: value => {
-                if (value.trim() === "") return "*This field is required";
-                return "";
-            }
-        },
-        city: {
-            el: document.getElementById("city"),
-            error: document.getElementById("city_error"),
-            validate: value => {
-                if (value.trim() === "") return "*This field is required";
-                return "";
-            }
-        },
-        email: {
-            el: document.getElementById("email"),
-            error: document.getElementById("email_error"),
-            validate: value => {
-                const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,6}$/;
-                if (value.trim() === "") return "*This field is required";
-                if (!emailPattern.test(value)) return "*Email must be in format: example@domain.com";
-                return "";
-            }
-        },
-        phone: {
-            el: document.getElementById("phone"),
-            error: document.getElementById("phone_error"),
-            validate: value => {
-                const phonePattern = /^\+?\d+$/;
-                if (value.trim() === "") return "*This field is required";
-                if (!phonePattern.test(value)) return "*Phone must be digits and may start with +";
-                return "";
-            }
-        },
-        whatsapp: {
-    el: document.getElementById("whatsapp"),
-    error: document.getElementById("whatsapp_error"),
-    validate: value => {
-        const phonePattern = /^\+\d{6,15}$/;
-        if (value.trim() === "") return "*This field is required";
-        if (!phonePattern.test(value)) return "*WhatsApp must start with + followed by 6 to 15 digits according to your country";
-        return "";
-    }
-},
-        password: {
-            el: document.getElementById("password"),
-            error: document.getElementById("password_error"),
-            validate: value => {
-                if (value.trim() === "") return "*This field is required";
-                if (!/^(?=.*\d)(?=.*[!@#$%^&*?]).{8,}$/.test(value)) {
-                    return "*At least 8 characters, 1 number, 1 special character";
-                }
-                return "";
-            }
-        },
-        confirm_password: {
-            el: document.getElementById("confirm_password"),
-            error: document.getElementById("confirm_password_error"),
-            validate: (value) => {
-                const passwordVal = document.getElementById("password").value;
-                if (value.trim() === "") return "*This field is required";
-                if (value !== passwordVal) return "*Password doesn't match";
-                return "";
-            }
-        }
-    };
-
-    Object.values(fields).forEach(({ el, error, validate }) => {
-        el.addEventListener("blur", () => {
-            const err = validate(el.value);
-            error.textContent = err;
-            error.style.color = "red";
-            el.style.borderColor = err ? "red" : "#ccc";
-        });
-
-        el.addEventListener("input", () => {
-            const err = validate(el.value);
-            error.textContent = err;
-            el.style.borderColor = err ? "red" : "#ccc";
-        });
-    });
-
-     // Username availability check (on blur)
-    document.getElementById("user_name").addEventListener("blur", function () {
-        const username = this.value.trim();
-        if (username !== "") {
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "DB_Ops.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    if (xhr.responseText === "exists") {
-                        isUsernameAvailable = false;
-                        fields.user_name.error.textContent = "*Username already taken";
-                        fields.user_name.error.style.color = "red";
-                        fields.user_name.el.style.borderColor = "red";
-                    } else {
-                        isUsernameAvailable = true;
-                        fields.user_name.error.textContent = "";
-                        fields.user_name.el.style.borderColor = "#ccc";
-                    }
-                }
-            };
-            xhr.send("user_name=" + encodeURIComponent(username));
-        }
-    });
-
-    // Final form submission with AJAX
-form.addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevent default form submission
-
-    let isValid = true;
-
-    // Validate all input fields
-    Object.values(fields).forEach(({ el, error, validate }) => {
-        const err = validate(el.value);
-        if (err) {
-            error.textContent = err;
-            error.style.color = "red";
-            el.style.borderColor = "red";
-            isValid = false;
-        } else {
-            error.textContent = "";
-            el.style.borderColor = "#ccc";
-        }
-    });
-
-    // Validate the image upload field
-    const fileInput = document.querySelector('input[type="file"]');
-    if (!fileInput || !fileInput.files.length) {
-        alert("Please upload an image.");
-        isValid = false;
-    }
-
-    // Check if username has already been marked unavailable
-    if (!isUsernameAvailable) {
-        fields.user_name.error.textContent = "*Username already taken";
-        fields.user_name.el.style.borderColor = "red";
-        isValid = false;
-    }
-
-    // If all validations pass, proceed with AJAX form submission
-    if (isValid) {
-        const formData = new FormData(form);
-        formData.append("register", "1"); // Append the register flag
-
-        const submitXhr = new XMLHttpRequest();
-        submitXhr.open("POST", "DB_Ops.php", true);
-        submitXhr.onreadystatechange = function () {
-            if (submitXhr.readyState === 4 && submitXhr.status === 200) {
-                alert(submitXhr.responseText); // Show success or error message
-
-                form.reset(); // Reset form fields
-
-                // Reset UI styles
-                Object.values(fields).forEach(({ el, error }) => {
-                    el.style.borderColor = "#ccc";
-                    error.textContent = "";
-                });
-
-                // Optional: reset file input styling or message if needed
-                if (fileInput) {
-                    fileInput.style.borderColor = "#ccc";
-                }
-            }
-        };
-
-        submitXhr.send(formData);
-    }
-});
-});
-
+const lang = '{{ str_contains(request()->path(), "Arabic") ? "ar" : "en" }}';
 </script>
+<script src="{{ asset('js/Validations.js') }}"></script>
 <script src="{{ asset('js/whatsapp-checker.js') }}"></script>
+
 
 
 @include('includes.Arabic_footer')

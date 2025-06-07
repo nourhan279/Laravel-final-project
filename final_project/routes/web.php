@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Controller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,8 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/English_form', function () {
-    return view('English_form');
+    return view('English_form', ['lang' => 'en']);
 });
 Route::get('/Arabic_form', function () {
-    return view('Arabic_form');
+    return view('Arabic_form', ['lang' => 'ar']);
 });
+Route::post('/register', [Controller::class, 'store'])->name('register.store');
