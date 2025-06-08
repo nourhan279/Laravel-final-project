@@ -1,12 +1,9 @@
+@extends('layouts.master_ar')
 
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>Registration Form</title>
-    <link rel="icon" type="image/jpeg" href="{{ asset('images/favicon.jpeg') }}">
-    <style>
+@section('title', 'Registration Form')
 
+@section('styles')
+<style>
         body{
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -153,15 +150,15 @@
 
 
     </style>
-</head>
-<body>
+@endsection
 
-@include('includes.Arabic_header')
+@section('content')
 <div id ="main">
 <div class="form-container">
 <div id="alertBox" style="display: none;" class="alert"></div>
 <h2 dir="rtl" style="text-align: center;" >موقع التسجيل</h2>
-<form id="myForm" method="POST" enctype="multipart/form-data" action="DB_Ops.php" onsubmit="return validateForm()" >
+ <form id="myForm" method="POST" action="{{ route('register.store') }}" enctype="multipart/form-data" onsubmit="return validateForm()">
+        @csrf
  <input type="hidden" name="lang" value="ar"> <label dir="rtl" for="full_name">الاسم الكامل:</label>
             <input dir="rtl" type="text" id="full_name" name="full_name" placeholder="الاسم الكامل" value="{{ old('full_name') }}" class="@error('full_name') is-invalid @enderror">
             <div class="text-danger" id="full_name_error">@error('full_name'){{ $message }}@enderror</div>
@@ -222,19 +219,14 @@
         </div>
     </div>
 </form>
+@endsection
 
-
+@section('scripts')
 <script>
 const lang = '{{ str_contains(request()->path(), "Arabic") ? "ar" : "en" }}';
 </script>
 <script src="{{ asset('js/Validations.js') }}"></script>
 <script src="{{ asset('js/whatsapp-checker.js') }}"></script>
 
-
-
-@include('includes.Arabic_footer')
-
-
-</body>
-</html>
+@endsection
 
