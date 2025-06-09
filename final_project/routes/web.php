@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\RegController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,10 +18,9 @@ use App\Http\Controllers\Controller;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/English_form', function () {
-    return view('English_form', ['lang' => 'en']);
+Route::get('/register', [RegController::class, 'create'])->name('register.create');
+Route::get('/set-language/{lang}', function ($lang) {
+    session(['locale' => $lang]);
+    return redirect()->route('register.create');
 });
-Route::get('/Arabic_form', function () {
-    return view('Arabic_form', ['lang' => 'ar']);
-});
-Route::post('/register', [Controller::class, 'store'])->name('register.store');
+Route::post('/register', [RegController::class, 'store'])->name('register.store');

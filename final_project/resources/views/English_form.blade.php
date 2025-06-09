@@ -3,6 +3,7 @@
 @section('title', 'Registration Form')
 
 @section('styles')
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <style>
     body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     main {
@@ -64,6 +65,24 @@
 @section('content')
 <div class="form-container">
     <div id="alertBox" style="display: none;" class="alert"></div>
+    @if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+    @if($errors->any())
+
+<div class="alert alert-danger">
+	<ul>
+	@foreach($errors->all() as $error)
+
+		<li>{{ $error }}</li>
+
+	@endforeach
+	</ul>
+</div>
+
+@endif
     <h2>Registration Form</h2>
 
     <form id="myForm" method="POST" action="{{ route('register.store') }}" enctype="multipart/form-data" onsubmit="return validateForm()">

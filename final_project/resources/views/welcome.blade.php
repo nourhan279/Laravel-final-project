@@ -47,9 +47,9 @@
 <body>
   <div class="container">
     <h1>Please select your language</h1>
-    {{-- <h1>من فضلك اختار اللغة الخاصة بك</h1> --}}
-    <button class="lang-btn" onclick="window.location.href='{{ url('/English_form') }}'">English</button>
-    <button class="lang-btn" onclick="window.location.href='{{ url('/Arabic_form') }}'">العربية</button>
+     <h1>من فضلك اختار اللغة الخاصة بك</h1> 
+    <button class="lang-btn" onclick="window.location.href='/set-language/en'">English</button>
+    <button class="lang-btn" onclick="window.location.href='/set-language/ar'">العربية</button>
   </div>
 </body>
 </html>
