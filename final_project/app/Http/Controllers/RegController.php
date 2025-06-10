@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Reg_Users;
+use Illuminate\Support\Facades\Http;
+use App\Rules\Validwp;
 
 class RegController extends Controller
 {
-    
+
     public function create()
     {
         $lang = session('locale', 'en'); // get locale from session, default to 'en'
@@ -19,9 +21,11 @@ class RegController extends Controller
             return view('English_form'); // English form view
         }
     }
-   
+
     // //validations
- 
+
+
+
     public function store(Request $request)
     {
         $lang = session('locale', 'en');
@@ -77,7 +81,7 @@ class RegController extends Controller
 
         $messages = ($lang == 'ar') ? $messages_ar : $messages_en;
 
-        
+
         $validated = $request->validate([
             'full_name' => ['required', 'string', 'regex:/^[^\d]+$/'],
             'user_name' => 'required|string|unique:laravel_users,user_name',
@@ -85,12 +89,14 @@ class RegController extends Controller
             'city' => 'required|string',
             'email' => 'required|email|unique:laravel_users,email',
             'phone' => ['required', 'regex:/^\+?\d+$/'],
-            'whatsapp' => ['required', 'regex:/^\+?\d+$/'],
+            'whatsapp' => ['required', 'regex:/^\+?\d+$/',new ValidWp()],
             'password' => ['required', 'string', 'min:8', 'regex:/^(?=.*\d)(?=.*[!@#$%^&*?]).+$/'],
             'password_confirmation' => 'required|same:password',
             'file' => 'required|image|mimes:jpeg,png,jpg|max:2048',
 
         ], $messages);
+
+
 
            // Handle image upload if present
         $imagePath = null;

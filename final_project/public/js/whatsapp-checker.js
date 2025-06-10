@@ -22,7 +22,7 @@ async function checkWhatsAppNumber() {
             method: "POST",
             headers: {
                 "x-rapidapi-key":
-                    "467d759e9bmshbcd0cea5bb0f749p151f4cjsn5a6432486d1d",
+                    "72b05b35a8msha4db4f59d8a7cd2p1fcadfjsn600ea600b86f",
                 "x-rapidapi-host": "whatsapp-number-validator3.p.rapidapi.com",
                 "Content-Type": "application/json",
             },
