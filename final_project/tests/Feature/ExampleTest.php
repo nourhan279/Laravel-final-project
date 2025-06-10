@@ -39,7 +39,7 @@ class ExampleTest extends TestCase
             'phone',
             'whatsapp',
             'password',
-            'confirm_password',
+            'password_confirmation',
         ]);
     }
 
